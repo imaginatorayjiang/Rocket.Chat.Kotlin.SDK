@@ -10,6 +10,7 @@ import com.squareup.moshi.Types
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.HttpUrl
+import java.util.logging.Logger
 
 suspend fun RocketChatClient.serverInfo(): ServerInfo = withContext(Dispatchers.IO) {
     val url = restUrl.newBuilder()
@@ -96,7 +97,6 @@ suspend fun RocketChatClient.settings(vararg filter: String): Map<String, Value<
             addQueryParameter("query", "{\"_id\": {\"\$in\": $fields}}")
         }
     }.build()
-
     val request = requestBuilder(url).get().build()
 
     val type = Types.newParameterizedType(
